@@ -6,6 +6,9 @@ import path from "path"
 
 const server=express();
 
+// parse form data
+server.use(express.urlencoded({extended:true}))
+
 //setup view engine setting
 server.set("view engine", "ejs")
 server.set('views',path.join(path.resolve(),"src","views",))
@@ -17,6 +20,8 @@ server.use(ejsLayouts)
 const productController=new ProductController()
 
 server.get('/',productController.getProducts)
+server.get('/new', productController.getAddForm)
+server.post('/', productController.addNewProduct)
 
 server.get('/',(req,res)=>{
     return res.end('Welcome to inventory App');
